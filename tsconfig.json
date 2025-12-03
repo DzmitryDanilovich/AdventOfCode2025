@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ES2017",
+    "lib": ["ES2017"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "types": ["node"]
+  }
+}
