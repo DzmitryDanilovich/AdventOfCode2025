@@ -62,18 +62,26 @@ const switchState = (
     const matchingButtons = buttons
         .filter((button) => button.has(firstValue));
 
-    const numbersOfPresses = matchingButtons
-        .map((button) => {
-            const newLightsState = lightsState.symmetricDifference(button);
-            const newButtons = buttons.filter((b) => b !== button);
+    let newMinPressedTimes = minPressedTimes;
+    let numbersOfPresses: number[] = [];
 
-            return switchState(
-                newLightsState,
-                newButtons,
-                pressedTimes + 1,
-                minPressedTimes,
-            );
-        });
+    for (const button of matchingButtons) {
+        const newLightsState = lightsState.symmetricDifference(button);
+        const newButtons = buttons.filter((b) => b !== button);
+
+        const numberOfPresses = switchState(
+            newLightsState,
+            newButtons,
+            pressedTimes + 1,
+            newMinPressedTimes,
+        );
+
+        numbersOfPresses.push(numberOfPresses);
+
+        if (numberOfPresses < newMinPressedTimes) {
+            newMinPressedTimes = numberOfPresses;
+        }
+    }
 
     return Math.min(...numbersOfPresses);
 };
